@@ -1,0 +1,197 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lab Inventory Management</title>
+    <style>
+        :root {
+            --primary-blue: #2563eb;
+            --bg-color: #f3f4f6;
+            --card-bg: #ffffff;
+            --text-main: #1f2937;
+            --border-color: #d1d5db;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container { max-width: 1200px; margin: 0 auto; }
+
+        .top-nav {
+            background-color: var(--card-bg);
+            padding: 20px 30px;
+            border-radius: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+            border: 1px solid var(--border-color);
+        }
+
+        .top-nav h1 { margin: 0; font-size: 22px; color: var(--primary-blue); }
+
+        .add-btn {
+            background-color: var(--primary-blue);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .lab-section {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+            border: 1px solid var(--border-color);
+        }
+
+        .lab-header {
+            background-color: var(--primary-blue);
+            color: white;
+            padding: 12px 20px;
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        table { width: 100%; border-collapse: collapse; }
+
+        th {
+            background-color: #f9fafb;
+            text-align: left;
+            padding: 15px 20px;
+            font-size: 13px;
+            color: #6b7280;
+            border-bottom: 1px solid var(--border-color);
+            text-transform: uppercase;
+        }
+
+        td { padding: 15px 20px; border-bottom: 1px solid #f3f4f6; font-size: 14px; }
+
+        /* Dynamic Status Styles */
+        .status-pill {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .stat-functional { background-color: #dcfce7; color: #166534; }
+        .stat-faulty { background-color: #fee2e2; color: #991b1b; }
+        .stat-missing { background-color: #fef3c7; color: #92400e; }
+
+        .btn-edit { color: var(--primary-blue); text-decoration: none; margin-right: 15px; font-weight: 600; }
+        .btn-delete { color: #ef4444; text-decoration: none; font-weight: 600; border:none; background:none; cursor:pointer; font-family: inherit; font-size: 14px;}
+        
+        /* Lab Badge Style */
+        .lab-badge {
+            background-color: #e2e8f0;
+            color: #475569;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-weight: 600;
+            font-size: 12px;
+        }
+        .lab-buttons{
+            display: flex;
+            justify-content: center;
+            padding-bottom: 15px;
+        }
+        #labs{
+            width: 200px;
+            height: 50px;
+            background-color: #2563eb;
+            border: none;
+            margin-left: 40px;
+            color: white;
+            font-family: Arial, Helvetica, sans-serif;
+            font-weight: bold;
+            font-size: 20px;
+            border-radius: 5px;
+        }
+        #labs:hover{
+            transition: ease-in;
+            cursor: pointer;
+            scale: 1.05;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="top-nav">
+            <h1>Lab Management System</h1>
+            <a href="/lab/add" class="add-btn">+ Add PC to Inventory</a>
+        </div>
+        <div class="lab-buttons">
+            <div>
+                <button id="labs" >Lab-01</button>
+                <button id="labs" >Lab-02</button>
+                <button id="labs">Lab-03</button>
+                <button id="labs">Lab-04</button>
+            </div>
+        </div>
+        <div class="lab-section">
+            <div class="lab-header">Overview - All Systems</div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Lab No</th>
+                        <th>PC ID</th>
+                        <th>Hardware Specs</th>
+                        <th>Mouse Status</th>
+                        <th>Keyboard Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% for(let pc of allPcs) { %>
+                    <tr>
+                        <td><span class="lab-badge"><%= pc.labRoom %></span></td>
+                        
+                        <td><strong><%= pc.pcNumber %></strong></td>
+                        
+                        <td>
+                            <div style="font-weight: 600;"><%= pc.specs.processor %></div>
+                            <div style="font-size: 12px; color: #6b7280;"><%= pc.specs.ram %> | <%= pc.specs.storage %></div>
+                        </td>
+                        
+                        <td>
+                            <span class="status-pill <%= pc.peripherals.mouse.status === 'Functional' ? 'stat-functional' : (pc.peripherals.mouse.status === 'Missing' ? 'stat-missing' : 'stat-faulty') %>">
+                                <%= pc.peripherals.mouse.status %>
+                            </span>
+                        </td>
+
+                        <td>
+                            <span class="status-pill <%= pc.peripherals.keyboard.status === 'Functional' ? 'stat-functional' : (pc.peripherals.keyboard.status === 'Missing' ? 'stat-missing' : 'stat-faulty') %>">
+                                <%= pc.peripherals.keyboard.status %>
+                            </span>
+                        </td>
+
+                        <td>
+                            <div style="display: flex; align-items: center;">
+                                <a href="/lab/edit/<%= pc._id %>" class="btn-edit">Edit</a>
+                                <form method="POST" action="/lab/<%= pc._id %>?_method=DELETE">
+                                    <button class="btn-delete">Delete</button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                    <% } %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</body>
+</html> -->

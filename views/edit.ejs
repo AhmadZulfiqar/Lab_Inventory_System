@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Lab Asset</title>
+    <style>
+        :root {
+            --primary-blue: #2563eb;
+            --bg-color: #f3f4f6;
+            --card-bg: #ffffff;
+            --text-main: #1f2937;
+            --border-color: #d1d5db;
+        }
+
+        body {
+            font-family: 'Inter', 'Segoe UI', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            background-color: var(--card-bg);
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 650px;
+        }
+
+        h1 { text-align: center; color: var(--primary-blue); margin-bottom: 30px; font-size: 24px; font-weight: 800; }
+        .form-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+        .input-group { display: flex; flex-direction: column; }
+        .full-width { grid-column: span 2; }
+        label { margin-bottom: 8px; font-weight: 600; font-size: 13px; color: #4b5563; text-transform: uppercase; }
+        select { padding: 12px; border: 1px solid var(--border-color); border-radius: 8px; font-size: 15px; background-color: #ffffff; cursor: pointer; }
+        select:focus { outline: none; border-color: var(--primary-blue); box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1); }
+        .btn-submit { grid-column: span 2; background-color: #059669; /* Green for Update */ color: white; padding: 14px; border: none; border-radius: 8px; font-size: 16px; font-weight: 700; cursor: pointer; margin-top: 10px; }
+        .btn-submit:hover { background-color: #047857; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Edit Lab Asset</h1>
+        
+        <form action="/lab/edit/<%= labdata._id %>?_method=PUT" method="POST" class="form-grid">
+            
+            <div class="input-group full-width">
+                <label>Lab Location</label>
+                <select name="labRoom" required>
+                   <% for(lab of showlabs) { %>
+                        <option value="<%= lab.LabName %>" <%= labdata.labRoom === lab.LabName ? 'selected' : '' %>><%= lab.LabName %></option>
+                    <% } %>
+                </select>
+            </div>
+
+            <div class="input-group full-width">
+                <label>Processor Specifications</label>
+                <select name="processor" required>
+                    <optgroup label="Core i7 Series">
+                        <option value="Core i7 12th Gen" <%= labdata.specs.processor === "Core i7 12th Gen" ? 'selected' : '' %>>Core i7 12th Gen</option>
+                        <option value="Core i7 11th Gen" <%= labdata.specs.processor === "Core i7 11th Gen" ? 'selected' : '' %>>Core i7 11th Gen</option>
+                        <option value="Core i7 10th Gen" <%= labdata.specs.processor === "Core i7 10th Gen" ? 'selected' : '' %>>Core i7 10th Gen</option>
+                        <option value="Core i7 9th Gen" <%= labdata.specs.processor === "Core i7 9th Gen" ? 'selected' : '' %>>Core i7 9th Gen</option>
+                        <option value="Core i7 8th Gen" <%= labdata.specs.processor === "Core i7 8th Gen" ? 'selected' : '' %>>Core i7 8th Gen</option>
+                        <option value="Core i7 7th Gen" <%= labdata.specs.processor === "Core i7 7th Gen" ? 'selected' : '' %>>Core i7 7th Gen</option>
+                        <option value="Core i7 6th Gen" <%= labdata.specs.processor === "Core i7 6th Gen" ? 'selected' : '' %>>Core i7 6th Gen</option>
+                        <option value="Core i7 5th Gen" <%= labdata.specs.processor === "Core i7 5th Gen" ? 'selected' : '' %>>Core i7 5th Gen</option>
+                        <option value="Core i7 4th Gen" <%= labdata.specs.processor === "Core i7 4th Gen" ? 'selected' : '' %>>Core i7 4th Gen</option>
+                        <option value="Core i7 3rd Gen" <%= labdata.specs.processor === "Core i7 3rd Gen" ? 'selected' : '' %>>Core i7 3rd Gen</option>
+                        <option value="Core i7 2nd Gen" <%= labdata.specs.processor === "Core i7 2nd Gen" ? 'selected' : '' %>>Core i7 2nd Gen</option>
+                        <option value="Core i7 1st Gen" <%= labdata.specs.processor === "Core i7 1st Gen" ? 'selected' : '' %>>Core i7 1st Gen</option>
+                    </optgroup>
+                    <optgroup label="Core i5 Series">
+                        <option value="Core i5 12th Gen" <%= labdata.specs.processor === "Core i5 12th Gen" ? 'selected' : '' %>>Core i5 12th Gen</option>
+                        <option value="Core i5 11th Gen" <%= labdata.specs.processor === "Core i5 11th Gen" ? 'selected' : '' %>>Core i5 11th Gen</option>
+                        <option value="Core i5 10th Gen" <%= labdata.specs.processor === "Core i5 10th Gen" ? 'selected' : '' %>>Core i5 10th Gen</option>
+                        <option value="Core i5 9th Gen" <%= labdata.specs.processor === "Core i5 9th Gen" ? 'selected' : '' %>>Core i5 9th Gen</option>
+                        <option value="Core i5 8th Gen" <%= labdata.specs.processor === "Core i5 8th Gen" ? 'selected' : '' %>>Core i5 8th Gen</option>
+                        <option value="Core i5 7th Gen" <%= labdata.specs.processor === "Core i5 7th Gen" ? 'selected' : '' %>>Core i5 7th Gen</option>
+                        <option value="Core i5 6th Gen" <%= labdata.specs.processor === "Core i5 6th Gen" ? 'selected' : '' %>>Core i5 6th Gen</option>
+                        <option value="Core i5 5th Gen" <%= labdata.specs.processor === "Core i5 5th Gen" ? 'selected' : '' %>>Core i5 5th Gen</option>
+                        <option value="Core i5 4th Gen" <%= labdata.specs.processor === "Core i5 4th Gen" ? 'selected' : '' %>>Core i5 4th Gen</option>
+                        <option value="Core i5 3rd Gen" <%= labdata.specs.processor === "Core i5 3rd Gen" ? 'selected' : '' %>>Core i5 3rd Gen</option>
+                        <option value="Core i5 2nd Gen" <%= labdata.specs.processor === "Core i5 2nd Gen" ? 'selected' : '' %>>Core i5 2nd Gen</option>
+                        <option value="Core i5 1st Gen" <%= labdata.specs.processor === "Core i5 1st Gen" ? 'selected' : '' %>>Core i5 1st Gen</option>
+                    </optgroup>
+                    <optgroup label="Core i3 Series">
+                        <option value="Core i3 12th Gen" <%= labdata.specs.processor === "Core i3 12th Gen" ? 'selected' : '' %>>Core i3 12th Gen</option>
+                        <option value="Core i3 11th Gen" <%= labdata.specs.processor === "Core i3 11th Gen" ? 'selected' : '' %>>Core i3 11th Gen</option>
+                        <option value="Core i3 10th Gen" <%= labdata.specs.processor === "Core i3 10th Gen" ? 'selected' : '' %>>Core i3 10th Gen</option>
+                        <option value="Core i3 9th Gen" <%= labdata.specs.processor === "Core i3 9th Gen" ? 'selected' : '' %>>Core i3 9th Gen</option>
+                        <option value="Core i3 8th Gen" <%= labdata.specs.processor === "Core i3 8th Gen" ? 'selected' : '' %>>Core i3 8th Gen</option>
+                        <option value="Core i3 7th Gen" <%= labdata.specs.processor === "Core i3 7th Gen" ? 'selected' : '' %>>Core i3 7th Gen</option>
+                        <option value="Core i3 6th Gen" <%= labdata.specs.processor === "Core i3 6th Gen" ? 'selected' : '' %>>Core i3 6th Gen</option>
+                        <option value="Core i3 5th Gen" <%= labdata.specs.processor === "Core i3 5th Gen" ? 'selected' : '' %>>Core i3 5th Gen</option>
+                        <option value="Core i3 4th Gen" <%= labdata.specs.processor === "Core i3 4th Gen" ? 'selected' : '' %>>Core i3 4th Gen</option>
+                        <option value="Core i3 3rd Gen" <%= labdata.specs.processor === "Core i3 3rd Gen" ? 'selected' : '' %>>Core i3 3rd Gen</option>
+                        <option value="Core i3 2nd Gen" <%= labdata.specs.processor === "Core i3 2nd Gen" ? 'selected' : '' %>>Core i3 2nd Gen</option>
+                        <option value="Core i3 1st Gen" <%= labdata.specs.processor === "Core i3 1st Gen" ? 'selected' : '' %>>Core i3 1st Gen</option>
+                    </optgroup>
+                </select>
+            </div>
+
+            <div class="input-group full-width">
+                <label>RAM Capacity</label>
+                <select name="ram" required>
+                    <% ['2GB', '4GB', '6GB', '8GB', '10GB','12GB','14GB','16GB'].forEach(size => { %>
+                        <option value="<%= size %>" <%= labdata.specs.ram === size ? 'selected' : '' %>><%= size %></option>
+                    <% }) %>
+                </select>
+            </div>
+
+            <div class="input-group">
+                <label>SSD Storage</label>
+                <select name="SSD">
+                    <option value="None" <%= labdata.specs.SSD === "None" ? 'selected' : '' %>>None</option>
+                    <option value="128GB SSD" <%= labdata.specs.SSD === "128GB SSD" ? 'selected' : '' %>>128GB SSD</option>
+                    <option value="256GB SSD" <%= labdata.specs.SSD === "256GB SSD" ? 'selected' : '' %>>256GB SSD</option>
+                    <option value="512GB SSD" <%= labdata.specs.SSD === "512GB SSD" ? 'selected' : '' %>>512GB SSD</option>
+                </select>
+            </div>
+
+            <div class="input-group">
+                <label>HDD Storage</label>
+                <select name="HDD">
+                    <option value="None" <%= labdata.specs.HDD === "None" ? 'selected' : '' %>>None</option>
+                    <option value="256GB HDD" <%= labdata.specs.HDD === "256GB HDD" ? 'selected' : '' %>>256GB HDD</option>
+                    <option value="500GB HDD" <%= labdata.specs.HDD === "500GB HDD" ? 'selected' : '' %>>500GB HDD</option>
+                </select>
+            </div>
+
+            <div class="input-group">
+                <label>Mouse Status</label>
+                <select name="mouseStatus">
+                    <% ['Functional', 'Non-Functional', 'Missing'].forEach(status => { %>
+                        <option value="<%= status %>" <%= labdata.peripherals.mouse.status === status ? 'selected' : '' %>><%= status %></option>
+                    <% }) %>
+                </select>
+            </div>
+
+            <div class="input-group">
+                <label>Keyboard Status</label>
+                <select name="keyboardStatus">
+                    <% ['Functional', 'Non-Functional', 'Missing'].forEach(status => { %>
+                        <option value="<%= status %>" <%= labdata.peripherals.keyboard.status === status ? 'selected' : '' %>><%= status %></option>
+                    <% }) %>
+                </select>
+            </div>
+
+            <button type="submit" class="btn-submit">Update PC Record</button>
+        </form>
+    </div>
+
+</body>
+</html>

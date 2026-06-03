@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lab Inventory System</title>
+    <style>
+        :root {
+            --primary-blue: #2563eb;
+            --bg-color: #f3f4f6;
+            --card-bg: #ffffff;
+            --text-main: #1f2937;
+            --border-color: #d1d5db;
+        }
+
+        body {
+            font-family: 'Inter', 'Segoe UI', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            background-color: var(--card-bg);
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 650px;
+        }
+
+        h1 {
+            text-align: center;
+            color: var(--primary-blue);
+            margin-bottom: 30px;
+            font-size: 24px;
+            font-weight: 800;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .full-width { grid-column: span 2; }
+
+        label {
+            margin-bottom: 8px;
+            font-weight: 600;
+            font-size: 13px;
+            color: #4b5563;
+            text-transform: uppercase;
+        }
+
+        select {
+            padding: 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 15px;
+            background-color: #ffffff;
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+
+        select:focus {
+            outline: none;
+            border-color: var(--primary-blue);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .btn-submit {
+            grid-column: span 2;
+            background-color: var(--primary-blue);
+            color: white;
+            padding: 14px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .btn-submit:hover { background-color: #1d4ed8; }
+
+        @media (max-width: 500px) {
+            .form-grid { grid-template-columns: 1fr; }
+            .full-width, .btn-submit { grid-column: span 1; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Register Lab Asset</h1>
+        
+        <form action="/lab/add" method="POST" class="form-grid">
+            
+            <div class="input-group full-width">
+                <label>Lab Location</label>
+                <select name="labRoom" required>
+                    <option value="" disabled selected>Select Lab</option>
+                    <% for(lab of showlabs) { %>
+                        <option value="<%= lab.LabName %>"><%= lab.LabName %></option>
+                    <% } %>
+                </select>
+            </div>
+            <div class="input-group full-width">
+                <label>Quantity of PCs (with these same specs)</label>
+                 <input type="number" name="quantity" min="1" max="50" value="1" required 
+                   style="padding: 12px; border: 1px solid var(--border-color); border-radius: 8px;">
+            </div>
+            
+            <div class="input-group full-width">
+                <label>Processor Specifications</label>
+                <select name="processor" required>
+                    <option value="" disabled selected>Choose Processor</option>
+                    <optgroup label="Core i7 Series">
+                        <option value="Core i7 12th Gen">Core i7 12th Gen</option>
+                        <option value="Core i7 11th Gen">Core i7 11th Gen</option>
+                        <option value="Core i7 10th Gen">Core i7 10th Gen</option>
+                        <option value="Core i7 9th Gen">Core i7 9th Gen</option>
+                        <option value="Core i7 8th Gen">Core i7 8th Gen</option>
+                        <option value="Core i7 7th Gen">Core i7 7th Gen</option>
+                        <option value="Core i7 6th Gen">Core i7 6th Gen</option>
+                        <option value="Core i7 5th Gen">Core i7 5th Gen</option>
+                        <option value="Core i7 4th Gen">Core i7 4th Gen</option>
+                        <option value="Core i7 3th Gen">Core i7 3th Gen</option>
+                        <option value="Core i7 2th Gen">Core i7 2th Gen</option>
+                        <option value="Core i7 1th Gen">Core i7 1th Gen</option>
+                    </optgroup>
+                    <optgroup label="Core i5 Series">
+                        <option value="Core i5 12th Gen">Core i5 12th Gen</option>
+                        <option value="Core i5 11th Gen">Core i5 11th Gen</option>
+                        <option value="Core i5 10th Gen">Core i5 10th Gen</option>
+                        <option value="Core i5 9th Gen">Core i5 9th Gen</option>
+                        <option value="Core i5 8th Gen">Core i5 8th Gen</option>
+                        <option value="Core i5 7th Gen">Core i5 7th Gen</option>
+                        <option value="Core i5 6th Gen">Core i5 6th Gen</option>
+                        <option value="Core i5 5th Gen">Core i5 5th Gen</option>
+                        <option value="Core i5 4th Gen">Core i5 4th Gen</option>
+                        <option value="Core i5 3th Gen">Core i5 3th Gen</option>
+                        <option value="Core i5 2th Gen">Core i5 2th Gen</option>
+                        <option value="Core i5 1th Gen">Core i5 1th Gen</option>
+                    </optgroup>
+                    <optgroup label="Core i3 Series">
+                        <option value="Core i3 12th Gen">Core i3 12th Gen</option>
+                        <option value="Core i3 11th Gen">Core i3 11th Gen</option>
+                        <option value="Core i3 10th Gen">Core i3 10th Gen</option>
+                        <option value="Core i3 9th Gen">Core i3 9th Gen</option>
+                        <option value="Core i3 8th Gen">Core i3 8th Gen</option>
+                        <option value="Core i3 7th Gen">Core i3 7th Gen</option>
+                        <option value="Core i3 6th Gen">Core i3 6th Gen</option>
+                        <option value="Core i3 5th Gen">Core i3 5th Gen</option>
+                        <option value="Core i3 4th Gen">Core i3 4th Gen</option>
+                        <option value="Core i3 3th Gen">Core i3 3th Gen</option>
+                        <option value="Core i3 2th Gen">Core i3 2th Gen</option>
+                        <option value="Core i3 1th Gen">Core i3 1th Gen</option>
+                    </optgroup>
+                </select>
+            </div>
+
+            <div class="input-group full-width">
+                <label>RAM Capacity</label>
+                <select name="ram" required>
+                    <option value="">Choose RAM</option>
+                    <option value="2GB">2GB</option>
+                    <option value="4GB">4GB</option>
+                    <option value="6GB">6GB</option>
+                    <option value="8GB">8GB</option>
+                    <option value="10GB">10GB</option>
+                    <option value="12GB">12GB</option>
+                    <option value="14GB">14GB</option>
+                    <option value="16GB">16GB</option>
+                </select>
+            </div>
+
+            <div class="input-group">
+                <label>SSD Storage</label>
+                <select name="ssdStorage">
+                    <option value="">None</option>
+                    <option value="128GB SSD">128GB SSD</option>
+                    <option value="256GB SSD">256GB SSD</option>
+                    <option value="512GB SSD">512GB SSD</option>
+                </select>
+            </div>
+
+            <div class="input-group">
+                <label>HDD Storage</label>
+                <select name="hddStorage">
+                    <option value="" selected>None</option>
+                    <option value="256GB HDD">256GB HDD</option>
+                    <option value="500GB HDD">500GB HDD</option>
+                </select>
+            </div>
+
+            <div class="input-group">
+                <label>Mouse Status</label>
+                <select name="mouseStatus">
+                    <option value="Functional">Functional</option>
+                    <option value="Non-Functional">Non-Functional</option>
+                    <option value="Missing">Missing</option>
+                </select>
+            </div>
+
+            <div class="input-group">
+                <label>Keyboard Status</label>
+                <select name="keyboardStatus">
+                    <option value="Functional">Functional</option>
+                    <option value="Non-Functional">Non-Functional</option>
+                    <option value="Missing">Missing</option>
+                </select>
+            </div>
+
+            <button type="submit" class="btn-submit">Save to Inventory</button>
+        </form>
+    </div>
+
+</body>
+</html>

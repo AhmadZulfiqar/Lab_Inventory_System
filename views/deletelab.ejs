@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Labs - Inventory System</title>
+    <style>
+        :root {
+            --primary-blue: #2563eb;
+            --danger-red: #ef4444;
+            --bg-color: #f3f4f6;
+            --card-bg: #ffffff;
+            --text-main: #1f2937;
+            --border-color: #d1d5db;
+        }
+
+        body {
+            font-family: 'Inter', 'Segoe UI', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 40px 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 700px;
+        }
+
+        .header-flex {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        h1 { font-size: 24px; font-weight: 800; color: var(--primary-blue); margin: 0; }
+
+        .add-lab-btn {
+            text-decoration: none;
+            background-color: var(--primary-blue);
+            color: white;
+            padding: 10px 18px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 14px;
+            transition: opacity 0.2s;
+        }
+
+        .lab-card-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .lab-item {
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            transition: transform 0.2s;
+        }
+
+        .lab-item:hover { transform: translateY(-2px); }
+
+        .lab-info h2 {
+            margin: 0;
+            font-size: 18px;
+            color: var(--text-main);
+        }
+
+        .lab-info p {
+            margin: 4px 0 0 0;
+            font-size: 13px;
+            color: #6b7280;
+        }
+
+        .delete-form button {
+            background-color: #fee2e2;
+            color: var(--danger-red);
+            border: 1px solid #fecaca;
+            padding: 8px 15px;
+            border-radius: 6px;
+            font-weight: 700;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .delete-form button:hover {
+            background-color: var(--danger-red);
+            color: white;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 30px;
+            color: #6b7280;
+            text-decoration: none;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="header-flex">
+            <h1>Manage Lab Rooms</h1>
+            <a href="/lab/new" class="add-lab-btn">+ New Lab</a>
+        </div>
+
+        <div class="lab-card-list">
+            <% if (showlabs.length > 0) { %>
+                <% for(let lab of showlabs) { %>
+                    <div class="lab-item">
+                        <div class="lab-info">
+                            <h2><%= lab.LabName %></h2>
+                            <p>Cascading delete enabled</p>
+                        </div>
+                        
+                        <form class="delete-form" method="POST" action="/lab/deletelab/<%= lab._id %>?_method=DELETE" 
+                              onsubmit="return confirm('ARE YOU SURE? This will permanently delete <%= lab.LabName %> and ALL PC specs stored inside it.')">
+                            <button type="submit">Delete Lab</button>
+                        </form>
+                    </div>
+                <% } %>
+            <% } else { %>
+                <div style="text-align: center; padding: 40px; color: #9ca3af;">
+                    No labs found. Click "+ New Lab" to start.
+                </div>
+            <% } %>
+        </div>
+
+        <a href="/lab" class="back-link">← Back to Inventory Dashboard</a>
+    </div>
+
+</body>
+</html>
